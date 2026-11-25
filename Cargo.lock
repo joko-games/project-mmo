@@ -2862,7 +2862,7 @@ dependencies = [
 
 [[package]]
 name = "mmo-client"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "bevy",
  "mmo-protocol",
@@ -2871,7 +2871,7 @@ dependencies = [
 
 [[package]]
 name = "mmo-protocol"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "serde",
  "serde_json",
@@ -2879,7 +2879,7 @@ dependencies = [
 
 [[package]]
 name = "mmo-server"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
  "mmo-protocol",

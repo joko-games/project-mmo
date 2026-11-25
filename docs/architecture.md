@@ -40,8 +40,8 @@ server will take authority over movement once there is something worth cheating 
 - `sky.rs`: the camera (HDR, bloom, no tone mapping) and the star field that follows it.
 - `system.rs`: the star, the planets on their orbits, and the star's light (a directional light aimed
   from the star at the probe).
-- `probe.rs`: the probe's model built from primitives, its flight, collisions, the orbit camera,
-  and the position reports.
+- `probe.rs`: the probe (three concentric parts: frame with thrusters, detachable core, payload),
+  its flight, collisions, the free view (a quaternion, no fixed up), and the position reports.
 - `hud.rs`: the fade from black, the wake-up log of a first arrival, readouts, planet labels.
 
 Everything spawned for a session carries `InGame` and is removed when the session ends.

@@ -25,11 +25,12 @@ The galaxy is saved in `data/<galaxy id>.json`. Delete that file to start the ga
 
 | Input | Action |
 |---|---|
-| W/Z, S, A/Q, D (or arrows) | thrust forward, back, left, right (relative to the camera) |
-| Space / Ctrl or C | up / down |
+| Z, S, Q, D on AZERTY (W, S, A, D on QWERTY), or arrows | thrust forward, back, left, right (relative to the view) |
+| A / E on AZERTY (Q / E on QWERTY) | roll the view |
+| Space / Ctrl or C | rise / sink, relative to the view |
 | Shift | long-range drive (6× thrust and top speed) |
 | X | brake |
-| Mouse drag (either button) | look around the probe |
+| Mouse drag (either button) | turn the view, on its own axes: there is no fixed up |
 | Wheel | camera distance |
 
 ## Tests and checks

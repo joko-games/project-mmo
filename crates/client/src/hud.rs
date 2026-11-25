@@ -158,7 +158,7 @@ fn spawn_hud(mut commands: Commands, session: Res<Session>, planets: Query<(Enti
         children![
             (Speed, Readout, text("", 18.0, TEXT)),
             text(
-                "WASD/ZQSD move   |   Space / Ctrl up, down   |   Shift long-range drive   |   X brake   |   drag to look   |   wheel zoom",
+                "ZQSD (WASD) move   |   A/E (Q/E) roll   |   Space / Ctrl rise, sink   |   Shift long-range drive   |   X brake   |   drag to look   |   wheel zoom",
                 12.0,
                 FAINT
             ),
@@ -322,7 +322,8 @@ fn planet_labels(
         let Ok((planet, transform)) = planets.get(label.0) else {
             continue;
         };
-        let top = transform.translation() + Vec3::Y * planet.0.radius * 1.3;
+        // Above the planet as the camera sees it: there is no other above.
+        let top = transform.translation() + camera_transform.up() * planet.0.radius * 1.3;
         let in_front = camera_transform
             .forward()
             .dot(top - camera_transform.translation())

@@ -135,5 +135,7 @@ fn drift_in_menu(time: Res<Time>, mut camera: Query<&mut Transform, With<MainCam
     };
     let t = time.elapsed_secs() * 0.02;
     camera.translation = Vec3::ZERO;
-    camera.rotation = Quat::from_rotation_y(t) * Quat::from_rotation_x(0.35);
+    // Turning about a slanted axis, and slowly rolling: no horizon to settle on.
+    let axis = Vec3::new(0.35, 1.0, 0.25).normalize();
+    camera.rotation = Quat::from_axis_angle(axis, t) * Quat::from_rotation_z(t * 0.7);
 }
