@@ -1,0 +1,45 @@
+[package]
+name = "mmo-client"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+mmo-protocol.workspace = true
+serde_json.workspace = true
+# Only the parts of Bevy the game uses: meshes built in code, lit and bloomed, and a UI.
+bevy = { version = "0.19.1", default-features = false, features = [
+    "std",
+    "async_executor",
+    "multi_threaded",
+    "bevy_asset",
+    "bevy_log",
+    "bevy_state",
+    "bevy_window",
+    "bevy_winit",
+    "x11",
+    "wayland",
+    "keyboard",
+    "mouse",
+    "bevy_clipboard",
+    "bevy_color",
+    "bevy_camera",
+    "bevy_image",
+    "bevy_mesh",
+    "bevy_shader",
+    "bevy_material",
+    "bevy_render",
+    "bevy_core_pipeline",
+    "bevy_post_process",
+    "bevy_light",
+    "bevy_pbr",
+    "bevy_text",
+    "default_font",
+    "bevy_ui",
+    "bevy_ui_render",
+    "bevy_ui_widgets",
+    "bevy_input_focus",
+    "bevy_picking",
+    "ui_picking",
+    # `--capture`: a screenshot saved as PNG.
+    "png",
+] }
