@@ -6,6 +6,7 @@ mod hud;
 mod menu;
 mod net;
 mod probe;
+mod shapes;
 mod sky;
 mod system;
 
@@ -43,6 +44,7 @@ fn main() {
     let mut server = DEFAULT_SERVER.to_string();
     let mut auto_connect = false;
     let mut capture = None;
+    let mut in_core = false;
     let mut args = std::env::args().skip(1);
     while let Some(arg) = args.next() {
         if arg == "--server"
@@ -54,6 +56,9 @@ fn main() {
             && let Some(value) = args.next()
         {
             capture = Some(value);
+        }
+        if arg == "--in-core" {
+            in_core = true;
         }
         if arg == "--connect" {
             auto_connect = true;
@@ -72,6 +77,7 @@ fn main() {
         .insert_resource(ServerAddress(server))
         .insert_resource(menu::AutoConnect(auto_connect || capture.is_some()))
         .insert_resource(capture::Capture(capture))
+        .insert_resource(capture::CaptureInCore(in_core))
         .add_plugins(capture::CapturePlugin)
         .init_state::<Screen>()
         .add_plugins((

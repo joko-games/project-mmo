@@ -5,7 +5,7 @@ use bevy::prelude::*;
 use mmo_protocol::{ClientMessage, PlanetKind};
 
 use crate::net::Connection;
-use crate::probe::Probe;
+use crate::probe::{Core, Piloting, Probe};
 use crate::sky::MainCamera;
 use crate::system::PlanetBody;
 use crate::{InGame, Screen, Session};
@@ -56,7 +56,8 @@ impl Plugin for HudPlugin {
         )
         .add_systems(
             Update,
-            (fade_in, wake_up_log, readouts, planet_labels).run_if(in_state(Screen::Playing)),
+            (fade_in, wake_up_log, readouts, planet_labels, show_mode)
+                .run_if(in_state(Screen::Playing)),
         );
     }
 }
@@ -71,6 +72,11 @@ struct Readout;
 struct Nearest;
 #[derive(Component)]
 struct Speed;
+/// What the player flies, and the keys for it.
+#[derive(Component)]
+struct ModeLine;
+#[derive(Component)]
+struct Hint;
 #[derive(Component)]
 struct PlanetLabel(Entity);
 
@@ -156,12 +162,9 @@ fn spawn_hud(mut commands: Commands, session: Res<Session>, planets: Query<(Enti
             ..default()
         },
         children![
+            (ModeLine, text("", 14.0, ACCENT)),
             (Speed, Readout, text("", 18.0, TEXT)),
-            text(
-                "ZQSD (WASD) move   |   A/E (Q/E) roll   |   Space / Ctrl rise, sink   |   Shift long-range drive   |   X brake   |   drag to look   |   wheel zoom",
-                12.0,
-                FAINT
-            ),
+            (Hint, text("", 12.0, FAINT)),
         ],
     ));
 
@@ -342,5 +345,44 @@ fn planet_labels(
             }
             _ => *visibility = Visibility::Hidden,
         }
+    }
+}
+
+const STRUCTURE_KEYS: &str = "ZQSD (WASD) move   |   A/E (Q/E) roll   |   Space / Ctrl rise, sink   |   Shift long-range drive   |   X brake   |   drag to look   |   wheel zoom   |   Tab core";
+const CORE_KEYS: &str = "ZQSD (WASD) move   |   Space / Ctrl up, down along the structure   |   Shift faster   |   drag to look   |   wheel zoom   |   Tab back into the structure";
+
+fn show_mode(
+    piloting: Res<Piloting>,
+    cores: Query<&Core>,
+    probe: Query<&Transform, With<Probe>>,
+    core_transforms: Query<&Transform, With<Core>>,
+    mut lines: Query<&mut Text, (With<ModeLine>, Without<Hint>)>,
+    mut hints: Query<&mut Text, (With<Hint>, Without<ModeLine>)>,
+) {
+    let (Ok(mut line), Ok(mut hint)) = (lines.single_mut(), hints.single_mut()) else {
+        return;
+    };
+    let wanted_line = match *piloting {
+        Piloting::Structure => match cores.single().map(|c| c.state) {
+            Ok(crate::probe::CoreState::Returning) => "STRUCTURE  -  core returning".to_string(),
+            _ => "STRUCTURE".to_string(),
+        },
+        Piloting::Core => {
+            let distance = match (probe.single(), core_transforms.single()) {
+                (Ok(p), Ok(c)) => p.translation.distance(c.translation),
+                _ => 0.0,
+            };
+            format!("CORE  -  {distance:.0} u from the structure")
+        }
+    };
+    if line.0 != wanted_line {
+        line.0 = wanted_line;
+    }
+    let wanted_hint = match *piloting {
+        Piloting::Structure => STRUCTURE_KEYS,
+        Piloting::Core => CORE_KEYS,
+    };
+    if hint.0 != wanted_hint {
+        hint.0 = wanted_hint.to_string();
     }
 }

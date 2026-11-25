@@ -8,20 +8,32 @@ That system is yours. It is both your tutorial and your home base.
 
 ## The probe
 
-Deliberately not realistic. Three parts nested one inside the other, sharing a center:
+Deliberately not realistic. Three parts nested one inside the other, and the whole is not a
+sphere: it is a drop pulled backwards, round at the nose and drawn out to a point at the tail.
 
-1. **The frame**, outside: the structure and the propulsion. Three rings at right angles and six
-   thrusters, one at each end of each axis, so the probe pushes the same way in every direction;
-   a thruster glows when it pushes.
-2. **The core**, inside the frame: the probe's thinking heart, a faceted shell turning on itself.
-   It will detach from the frame in some situations (it is already its own entity, `ProbeCore`).
+1. **The structure**, outside: six ribs swept back from the nose to the tail, with hoops across
+   them. The main engine is at the tail, and smaller thrusters ring the nose and the tail and sit at
+   the nose's tip. A thruster glows, and its flame grows, when it pushes.
+2. **The core**, inside the structure: the probe's thinking heart, a smaller translucent drop that
+   turns on its long axis.
 3. **The payload**, at the center of the core: the seed of life, beating slowly.
+
+## Two ways to fly
+
+- **Structure** (the default): the whole probe, with inertia. The view turns freely on every axis
+  and rolls; the probe turns its nose where it is pushed.
+- **Core** (Tab): the core detaches and the player flies it alone, with a simpler navigation, the
+  one building will use. There is no inertia (it stops when nothing is pressed), the view turns
+  and tilts without rolling, and the structure gives the reference: forward and sideways in the
+  plane of its axes, Space and Ctrl along its up. The core stays within 250 units of the structure,
+  which drifts to a stop meanwhile. Tab again, and the core flies itself back into place.
 
 ## No up
 
-Space has no up. In flight the view turns freely on every axis, rolls included, and nothing on
-screen marks a vertical: the menu's sky rolls, the planet labels sit above the planets as the
-camera sees them. Only the building mode to come will have an up.
+Space has no up. Flying the structure, the view turns freely on every axis, rolls included, and
+nothing on screen marks a vertical: the menu's sky rolls, the planet labels sit above the planets
+as the camera sees them. The only up is the structure's own, used when flying the core, which is
+where building will happen.
 
 ## The false goal
 
